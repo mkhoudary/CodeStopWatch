@@ -61,7 +61,11 @@ INFO: Stopwatch for We want to test some code stopped in 10/4/22 7:38 PM after 5
 ```
 
 #Other Utility Methods
-| Method  | Descro[topm |
+| Method  | Descrption |
 | ------------- | ------------- |
 | reset  | Resets stopwatch parameters  |
 | destroy  | Destroys current instance  |
+| entries  | Returns a list of StopWatchEntry which contains timestamp for mark, timeFromLastMark, message  |
+
+#CodeStopWatch and Threads
+CodeStopWatch runs an instance for each thread, running CodeStopWatch among multiple threads will spawn an instance for each thread while benchmarking, this helps in using CodeStopWatch in J2EE environment for example along with a request lifecycle listener and make it begin when request begins and finishes when it finishes, and allowing it to be used throughout application without worrying about threading.
