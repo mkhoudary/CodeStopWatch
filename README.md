@@ -18,9 +18,9 @@ Then you can use CodeStopWatch in one of the following use cases.
 You can test any code speed with stopwatch by using **benchmark** method as follows:
 
 ```java
-long totalTimeInMillis = CodeStopWatch.instance().benchmark(() -> {
+long totalTimeInMillis = CodeStopWatch.instance().benchmark("Your Purpose of testing", () -> {
             //Your testing code goes here
-        }, "Your Purpose of testing");
+        });
 ```
 
 Then after you're done you can call:
@@ -58,6 +58,35 @@ INFO: Finished executing block 3	10/4/22 7:38 PM	0.81s
 INFO: Finished executing block 4	10/4/22 7:42 PM	2.00s
 INFO: -----------------------------------------
 INFO: Stopwatch for We want to test some code stopped in 10/4/22 7:38 PM after 5.01s
+```
+##Testing Multiple Scenarios
+You can compare multiple scenarios using the compare method as follows:
+
+```java
+CodeStopWatch.instance().compare("Testing some code", () -> {
+            //Scenario 1 code
+        }, () -> {
+            //Scenario 2 code
+        }, () -> {
+            //Scenario 3 code
+        });
+        
+CodeStopWatch.instance().print()
+```
+
+Execution result will look like this:
+
+```
+INFO: Stopwatch for Testing some code started in 10/4/22 7:59 PM
+INFO: -----------------------------------------
+INFO: Executing scenario 1	10/4/22 7:59 PM	0.01s
+INFO: Finished executing scenario 1	10/4/22 7:59 PM	1.00s
+INFO: Executing scenario 2	10/4/22 7:59 PM	0.00s
+INFO: Finished executing scenario 2	10/4/22 7:59 PM	1.50s
+INFO: Executing scenario 3	10/4/22 7:59 PM	0.00s
+INFO: Finished executing scenario 3	10/4/22 7:59 PM	2.00s
+INFO: -----------------------------------------
+INFO: Stopwatch for Testing some code stopped in 10/4/22 7:59 PM after 4.51s
 ```
 
 #Other Utility Methods
