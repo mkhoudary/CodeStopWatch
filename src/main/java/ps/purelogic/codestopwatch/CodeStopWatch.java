@@ -33,7 +33,7 @@ public class CodeStopWatch {
         markedTimes = new LinkedList<>();
     }
 
-    public long benchmark(Runnable runnable, String reason) {
+    public long benchmark(String reason, Runnable runnable) {
         start(reason);
 
         mark("Started execution");
@@ -43,6 +43,24 @@ public class CodeStopWatch {
         mark("Finished execution");
 
         return stop();
+    }
+
+    public long[] compare(String reason, Runnable... runnables) {
+        long[] executions = new long[runnables.length];
+
+        start(String.format(reason));
+
+        for (int i = 0; i < executions.length; i++) {
+            mark(String.format("Executing scenario %d", i + 1));
+
+            runnables[i].run();
+
+            executions[i] = mark(String.format("Finished executing scenario %d", i + 1));
+        }
+
+        stop();
+
+        return executions;
     }
 
     public void start(String reason) {
@@ -60,19 +78,23 @@ public class CodeStopWatch {
 
         return stopTime - startTime;
     }
-    
+
     public void reset() {
         startTime = 0;
         stopTime = 0;
         lastMark = 0;
-        
+
         markedTimes.clear();
     }
 
-    public void mark(String comment) {
-        markedTimes.add(new StopWatchEntry(System.currentTimeMillis(), System.currentTimeMillis() - lastMark, comment));
+    public long mark(String comment) {
+        long timeTaken = System.currentTimeMillis() - lastMark;
+        
+        markedTimes.add(new StopWatchEntry(System.currentTimeMillis(), timeTaken, comment));
 
         lastMark = System.currentTimeMillis();
+        
+        return timeTaken;
     }
 
     public List<StopWatchEntry> entries() {
