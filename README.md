@@ -59,7 +59,7 @@ INFO: Finished executing block 4	10/4/22 7:42 PM	2.00s
 INFO: -----------------------------------------
 INFO: Stopwatch for We want to test some code stopped in 10/4/22 7:38 PM after 5.01s
 ```
-##Testing Multiple Scenarios
+## Testing Multiple Scenarios
 You can compare multiple scenarios using the compare method as follows:
 
 ```java
@@ -89,7 +89,7 @@ INFO: -----------------------------------------
 INFO: Stopwatch for Testing some code stopped in 10/4/22 7:59 PM after 4.51s
 ```
 
-#Other Utility Methods
+# Other Utility Methods
 | Method  | Descrption |
 | ------------- | ------------- |
 | reset  | Resets stopwatch parameters  |
