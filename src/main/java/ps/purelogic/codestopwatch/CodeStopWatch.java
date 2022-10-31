@@ -102,19 +102,35 @@ public class CodeStopWatch {
     }
 
     public void print() {
-        Logger.getLogger(CodeStopWatch.class.getName()).log(Level.INFO, "Stopwatch for {0} started in {1}", new Object[]{reason, new Date(startTime)});
-        Logger.getLogger(CodeStopWatch.class.getName()).log(Level.INFO, "-----------------------------------------");
+        print(false);
+    }
+    
+    public void print(boolean warning) {
+        Level loggingLevel = Level.INFO;
+        
+        if (warning) {
+            loggingLevel = Level.WARNING;
+        }
+        
+        Logger.getLogger(CodeStopWatch.class.getName()).log(loggingLevel, "Stopwatch for {0} started in {1}", new Object[]{reason, new Date(startTime)});
+        Logger.getLogger(CodeStopWatch.class.getName()).log(loggingLevel, "-----------------------------------------");
 
         long lastLoggedTime = startTime;
 
         for (StopWatchEntry entry : markedTimes) {
-            Logger.getLogger(CodeStopWatch.class.getName()).log(Level.INFO, "{0}\t{1}\t{2}s", new Object[]{entry.message, new Date(entry.timestamp), new BigDecimal((entry.timestamp - lastLoggedTime) / 1000.0).setScale(2, RoundingMode.CEILING).toString()});
+            Logger.getLogger(CodeStopWatch.class.getName()).log(loggingLevel, "{0}\t{1}\t{2}s", new Object[]{entry.message, new Date(entry.timestamp), new BigDecimal((entry.timestamp - lastLoggedTime) / 1000.0).setScale(2, RoundingMode.CEILING).toString()});
             lastLoggedTime = entry.timestamp;
         }
 
-        Logger.getLogger(CodeStopWatch.class.getName()).log(Level.INFO, "-----------------------------------------");
+        Logger.getLogger(CodeStopWatch.class.getName()).log(loggingLevel, "-----------------------------------------");
 
-        Logger.getLogger(CodeStopWatch.class.getName()).log(Level.INFO, "Stopwatch for {0} stopped in {1} after {2}s", new Object[]{reason, new Date(stopTime), new BigDecimal((stopTime - startTime) / 1000.0).setScale(2, RoundingMode.CEILING).toString()});
+        Logger.getLogger(CodeStopWatch.class.getName()).log(loggingLevel, "Stopwatch for {0} stopped in {1} after {2}s", new Object[]{reason, new Date(stopTime), new BigDecimal((stopTime - startTime) / 1000.0).setScale(2, RoundingMode.CEILING).toString()});
+    }
+
+    public void printIfExceeds(long timeInMillis) {
+        if (stopTime - startTime > timeInMillis) {
+            print(true);
+        }
     }
 
     public void destroy() {
