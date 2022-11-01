@@ -88,7 +88,7 @@ INFO: Finished executing scenario 3	10/4/22 7:59 PM	2.00s
 INFO: -----------------------------------------
 INFO: Stopwatch for Testing some code stopped in 10/4/22 7:59 PM after 4.51s
 ```
-# Plant warnings using printIfExceeds
+# Conditional warnings using printIfExceeds
 You can use printIfExceeds(long timeTakenInMillis) to optionally print to log the stopwatch result if and only if the overall time taken exceeds the entered time in milliseconds.
 
 # Other Utility Methods
