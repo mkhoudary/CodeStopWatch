@@ -12,7 +12,30 @@ Using CodeStopWatch is so simple, first of all you add it to your POM file:
 </dependency>
 ```
 
-Then you can use CodeStopWatch in one of the following use cases.
+# Android Implementation 
+
+Update your `settings.gradle` file with the following dependency.
+
+```groovy
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' } // this one
+    }
+}
+```
+
+Update your module level `build.gradle` file with the following dependency.
+
+```groovy
+dependencies {
+ implementation 'com.github.mkhoudary:CodeStopWatch:-SNAPSHOT'
+}
+```
+
+Now you can use CodeStopWatch in one of the following use cases.
 
 ## Testing Code Speed as a Whole
 You can test any code speed with stopwatch by using **benchmark** method as follows:
