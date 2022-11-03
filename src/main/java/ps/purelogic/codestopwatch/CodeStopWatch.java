@@ -7,6 +7,7 @@ package ps.purelogic.codestopwatch;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
@@ -15,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author m.elkhoudary
  */
 public class CodeStopWatch {
@@ -89,11 +89,11 @@ public class CodeStopWatch {
 
     public long mark(String comment) {
         long timeTaken = System.currentTimeMillis() - lastMark;
-        
+
         markedTimes.add(new StopWatchEntry(System.currentTimeMillis(), timeTaken, comment));
 
         lastMark = System.currentTimeMillis();
-        
+
         return timeTaken;
     }
 
@@ -104,27 +104,31 @@ public class CodeStopWatch {
     public void print() {
         print(false);
     }
-    
+
     public void print(boolean warning) {
         Level loggingLevel = Level.INFO;
-        
+
         if (warning) {
             loggingLevel = Level.WARNING;
         }
-        
-        Logger.getLogger(CodeStopWatch.class.getName()).log(loggingLevel, "Stopwatch for {0} started in {1}", new Object[]{reason, new Date(startTime)});
+        String startLabel = String.format("Stopwatch for %1$s started in %2$s", Arrays.toString(new Object[]{reason}), Arrays.toString(new Object[]{new Date(startTime)}));
+
+        Logger.getLogger(CodeStopWatch.class.getName()).log(loggingLevel, startLabel);
         Logger.getLogger(CodeStopWatch.class.getName()).log(loggingLevel, "-----------------------------------------");
 
         long lastLoggedTime = startTime;
 
         for (StopWatchEntry entry : markedTimes) {
-            Logger.getLogger(CodeStopWatch.class.getName()).log(loggingLevel, "{0}\t{1}\t{2}s", new Object[]{entry.message, new Date(entry.timestamp), new BigDecimal((entry.timestamp - lastLoggedTime) / 1000.0).setScale(2, RoundingMode.CEILING).toString()});
+            String durationLabel = String.format("%1$s\t%2$s\t%3$s s", Arrays.toString(new Object[]{entry.message}), Arrays.toString(new Object[]{new Date(entry.timestamp)}),Arrays.toString(new Object[]{ new BigDecimal((entry.timestamp - lastLoggedTime) / 1000.0).setScale(2, RoundingMode.CEILING).toString()}));
+            Logger.getLogger(CodeStopWatch.class.getName()).log(loggingLevel, durationLabel);
             lastLoggedTime = entry.timestamp;
         }
 
         Logger.getLogger(CodeStopWatch.class.getName()).log(loggingLevel, "-----------------------------------------");
 
-        Logger.getLogger(CodeStopWatch.class.getName()).log(loggingLevel, "Stopwatch for {0} stopped in {1} after {2}s", new Object[]{reason, new Date(stopTime), new BigDecimal((stopTime - startTime) / 1000.0).setScale(2, RoundingMode.CEILING).toString()});
+        String finishTitle = String.format("Stopwatch for %1$s stopped in %2$s after %3$s s", Arrays.toString(new Object[]{reason}), Arrays.toString(new Object[]{new Date(stopTime)}),Arrays.toString(new Object[]{new BigDecimal((stopTime - startTime) / 1000.0).setScale(2, RoundingMode.CEILING).toString()}));
+
+        Logger.getLogger(CodeStopWatch.class.getName()).log(loggingLevel, finishTitle);
     }
 
     public void printIfExceeds(long timeInMillis) {
