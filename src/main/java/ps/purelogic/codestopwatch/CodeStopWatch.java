@@ -111,7 +111,8 @@ public class CodeStopWatch {
         if (warning) {
             loggingLevel = Level.WARNING;
         }
-        String startLabel = String.format("Stopwatch for %s started in %s", Arrays.toString(new Object[]{reason}), Arrays.toString(new Object[]{new Date(startTime)}));
+
+        String startLabel = String.format("Stopwatch for %s started in %s", reason, new Date(startTime));
 
         Logger.getLogger(CodeStopWatch.class.getName()).log(loggingLevel, startLabel);
         Logger.getLogger(CodeStopWatch.class.getName()).log(loggingLevel, "-----------------------------------------");
@@ -119,16 +120,16 @@ public class CodeStopWatch {
         long lastLoggedTime = startTime;
 
         for (StopWatchEntry entry : markedTimes) {
-            String durationLabel = String.format("%s\t%s\t%s s", Arrays.toString(new Object[]{entry.message}), Arrays.toString(new Object[]{new Date(entry.timestamp)}),Arrays.toString(new Object[]{ new BigDecimal((entry.timestamp - lastLoggedTime) / 1000.0).setScale(2, RoundingMode.CEILING).toString()}));
+            String durationLabel = String.format("%s\t%s\t%s s",entry.message, new Date(entry.timestamp), new BigDecimal((entry.timestamp - lastLoggedTime) / 1000.0).setScale(2, RoundingMode.CEILING).toString());
             Logger.getLogger(CodeStopWatch.class.getName()).log(loggingLevel, durationLabel);
             lastLoggedTime = entry.timestamp;
         }
 
         Logger.getLogger(CodeStopWatch.class.getName()).log(loggingLevel, "-----------------------------------------");
 
-        String finishTitle = String.format("Stopwatch for %s stopped in %s after %s s", Arrays.toString(new Object[]{reason}), Arrays.toString(new Object[]{new Date(stopTime)}),Arrays.toString(new Object[]{new BigDecimal((stopTime - startTime) / 1000.0).setScale(2, RoundingMode.CEILING).toString()}));
-
+        String finishTitle = String.format("Stopwatch for %s stopped in %s after %s s", reason, new Date(stopTime), new BigDecimal((stopTime - startTime) / 1000.0).setScale(2, RoundingMode.CEILING).toString());
         Logger.getLogger(CodeStopWatch.class.getName()).log(loggingLevel, finishTitle);
+
     }
 
     public void printIfExceeds(long timeInMillis) {
